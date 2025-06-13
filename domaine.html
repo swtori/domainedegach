@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Domaine - Domaine de Gach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-container {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 60%;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 1s ease-out;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .navbar {
+                width: 85%;
+                padding: 1rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .navbar {
+                width: 60%;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger span {
+                width: 30px;
+                height: 3px;
+                margin: 6px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(8px, -8px);
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                font-weight: 400;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                white-space: normal;
+            }
+
+            .nav-links a:hover {
+                background-color: #f5f5f5;
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -30px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .gallery-item {
+            display: flex;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .gallery-image {
+            flex: 1;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .gallery-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2E7D32;
+        }
+
+        .gallery-content p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 40vh;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .gallery-item {
+                flex-direction: column !important;
+            }
+
+            .gallery-image {
+                height: 300px;
+                margin-bottom: 1rem;
+            }
+
+            .gallery-content {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Domaine de Gach</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Chambres</a>
+                <a href="domaine.html">Autour du Domaine</a>
+                <a href="localisation.html">Nous localiser</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="hero">
+        <h1>Autour du Domaine</h1>
+        <h2>Découvrez les merveilles de l'Aude</h2>
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Circuit Gastronomique">
+            </div>
+            <div class="gallery-content">
+                <h2>Circuit Gastronomique</h2>
+                <p>Vous irez à travers des paysages aussi variés que les saveurs de leurs spécialités. Le cassoulet de Castelnaudary, la fricassée de Limoux, la charcuterie de la Haute Vallée de l'Aude et les fromages de la Montagne Noire...</p>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="La Ronde des Vins">
+            </div>
+            <div class="gallery-content">
+                <h2>La Ronde des Vins</h2>
+                <p>Découvrez la beauté des vignobles de l'Aude, la Malepère, le Cabardès, le Minervois, les Corbières et goûtez à la haute qualité des vins. Merlot, cabernet sauvignon, cabernet franc et chardonnay en sont les principaux cépages.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Les Châteaux Cathares">
+            </div>
+            <div class="gallery-content">
+                <h2>Les Châteaux Cathares</h2>
+                <p>Parmi les nombreux châteaux cathares, les plus proches du domaine sont ceux de Lastours. Ils ont vécu au fil des siècles la croisade des Albigeois, fait alliances avec les "Parfaits", subi l'invasion des Huguenots...</p>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Le Canal du Midi">
+            </div>
+            <div class="gallery-content">
+                <h2>Le Canal du Midi</h2>
+                <p>Le canal passe à 3 km du domaine. Il est classé au patrimoine de l'UNESCO pour ses nombreux ouvrages d'art que sont ses écluses, ses ponts, ses aqueducs, sa voûte de Vauban, ses chemins de halage et... sa Rigole.</p>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="La Cité Médiévale">
+            </div>
+            <div class="gallery-content">
+                <h2>La Cité Médiévale</h2>
+                <p>Avec ses doubles remparts, ses 48 tours, son château comtal et à ses pieds l'Aude, la cité est un bel ensemble. Elle propose un spectacle tous les soirs de juillet et un feu d'artifice unique le 14 juillet. Incontournable !</p>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Les Régions">
+            </div>
+            <div class="gallery-content">
+                <h2>Les Régions</h2>
+                <p>Merveilleux contraste entre les collines du Lauragais, les hautes forêts de la Montagne Noire, les garrigues et maquis des Corbières et du Minervois. Chaque région a ses couleurs, ses odeurs, ses mystères, ses richesses...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html> 

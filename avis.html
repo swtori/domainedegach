@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avis - Domaine de Gach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .navbar-container {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 60%;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .reviews-section {
+            padding: 120px 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .reviews-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .reviews-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .reviewer-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 0.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #FFD700;
+        }
+
+        .review-text {
+            color: #444;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .google-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4285F4;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .google-badge i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 85%;
+                padding: 0.7rem 1.2rem;
+            }
+
+            .reviews-section {
+                padding: 100px 1rem 1rem;
+            }
+
+            .reviews-header h1 {
+                font-size: 2rem;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            background: #fff3f3;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .error-message p {
+            color: #d32f2f;
+            margin: 0.5rem 0;
+        }
+        .error-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .no-reviews {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        .place-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .place-header h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .address {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .rating-summary {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .average-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .rating-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .stars {
+            color: #FFD700;
+            font-size: 1.5rem;
+        }
+        .total-ratings {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Domaine de Gach</a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Chambres</a>
+                <a href="domaine.html">Autour du Domaine</a>
+                <a href="localisation.html">Nous localiser</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="reviews-section">
+        <div class="reviews-header">
+            <h1>Ce que disent nos clients</h1>
+            <p>Découvrez les avis de nos clients sur Google Maps</p>
+        </div>
+
+        <!-- Solution de secours avec iframe -->
+        <div class="google-reviews-fallback" style="margin: 2rem 0;">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2783.1234567890123!2d4.123456789012345!3d45.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDXCsDA3JzI0LjQiTiA0wrAwNycyNC40IkU!5e0!3m2!1sfr!2sfr!4v1234567890123!5m2!1sfr!2sfr"
+                width="100%"
+                height="450"
+                style="border:0; border-radius: 12px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <div class="reviews-grid" id="reviews-container">
+            <!-- Les avis seront chargés dynamiquement ici -->
+        </div>
+    </section>
+
+    <script>
+        // Configuration
+        const config = {
+            placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            apiKey: 'AIzaSyD2uRW1635p7bxl1gzYVMpe8FS6eCBZD0A',
+            fields: 'name,rating,reviews,user_ratings_total,formatted_address'
+        };
+
+        // Fonction pour créer une carte d'avis
+        function createReviewCard(review) {
+            const date = new Date(review.time * 1000);
+            const formattedDate = date.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            return `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            ${review.author_name.charAt(0)}
+                        </div>
+                        <div class="reviewer-info">
+                            <h3>${review.author_name}</h3>
+                            <div class="review-date">${formattedDate}</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                    </div>
+                    <div class="review-text">
+                        ${review.text}
+                    </div>
+                    <div class="google-badge">
+                        <i class="fab fa-google"></i>
+                        Avis Google
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour charger les avis
+        async function loadReviews() {
+            try {
+                console.log('Tentative de chargement des avis...');
+                const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${config.placeId}&fields=${config.fields}&key=${config.apiKey}`;
+                console.log('URL de la requête:', url);
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Statut de la réponse:', response.status);
+                const data = await response.json();
+                console.log('Données complètes reçues:', JSON.stringify(data, null, 2));
+                
+                if (data.status === 'OK' && data.result) {
+                    const container = document.getElementById('reviews-container');
+                    
+                    // Afficher le nom et la note moyenne
+                    const header = document.createElement('div');
+                    header.className = 'place-header';
+                    header.innerHTML = `
+                        <h2>${data.result.name || 'Domaine de Gach'}</h2>
+                        ${data.result.formatted_address ? `<p class="address">${data.result.formatted_address}</p>` : ''}
+                        <div class="rating-summary">
+                            <div class="average-rating">
+                                <span class="rating-number">${data.result.rating || 'N/A'}</span>
+                                <div class="stars">${'★'.repeat(Math.round(data.result.rating || 0))}${'☆'.repeat(5 - Math.round(data.result.rating || 0))}</div>
+                            </div>
+                            <div class="total-ratings">${data.result.user_ratings_total || 0} avis</div>
+                        </div>
+                    `;
+                    container.appendChild(header);
+
+                    if (data.result.reviews && data.result.reviews.length > 0) {
+                        const reviews = data.result.reviews;
+                        console.log(`Nombre d'avis trouvés: ${reviews.length}`);
+                        
+                        const reviewsContainer = document.createElement('div');
+                        reviewsContainer.className = 'reviews-list';
+                        reviewsContainer.innerHTML = reviews
+                            .map(review => createReviewCard(review))
+                            .join('');
+                        container.appendChild(reviewsContainer);
+                        
+                        console.log('Avis affichés avec succès');
+                    } else {
+                        console.log('Aucun avis trouvé pour cet établissement');
+                        container.innerHTML += '<p class="no-reviews">Aucun avis disponible pour le moment.</p>';
+                    }
+                } else {
+                    console.error('Erreur dans la réponse:', {
+                        status: data.status,
+                        error_message: data.error_message,
+                        html_attributions: data.html_attributions
+                    });
+                    throw new Error(data.error_message || 'Erreur lors du chargement des avis');
+                }
+            } catch (error) {
+                console.error('Erreur détaillée:', error);
+                const container = document.getElementById('reviews-container');
+                container.innerHTML = `
+                    <div class="error-message">
+                        <p>Désolé, nous n'avons pas pu charger les avis pour le moment.</p>
+                        <p>Veuillez réessayer plus tard.</p>
+                        <p class="error-details">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger les avis au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page chargée, démarrage du chargement des avis...');
+            loadReviews();
+        });
+    </script>
+</body>
+</html> 

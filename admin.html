@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Domaine de Gach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .back-button {
+            padding: 0.7rem 1.5rem;
+            background-color: #2E7D32;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #1B5E20;
+        }
+
+        .sections {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h2 i {
+            color: #2E7D32;
+        }
+
+        .image-container {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .image-preview {
+            width: 150px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .image-info {
+            flex-grow: 1;
+        }
+
+        .image-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-button {
+            background-color: #2E7D32;
+            color: white;
+        }
+
+        .edit-button:hover {
+            background-color: #1B5E20;
+        }
+
+        .preview-button {
+            background-color: #1976D2;
+            color: white;
+        }
+
+        .preview-button:hover {
+            background-color: #1565C0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .image-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .image-preview {
+                width: 100%;
+                height: 150px;
+            }
+
+            .image-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Administration des Images</h1>
+        <a href="index.html" class="back-button">Retour au site</a>
+    </div>
+
+    <div class="sections">
+        <!-- Page d'accueil -->
+        <div class="section">
+            <h2><i class="fas fa-home"></i> Page d'accueil</h2>
+            <div class="image-container">
+                <div class="image-preview" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
+                <div class="image-info">
+                    <p><strong>Image principale</strong></p>
+                    <p>Hero section - index.html</p>
+                </div>
+                <div class="image-actions">
+                    <button class="action-button edit-button" onclick="editImage('hero-image')">
+                        <i class="fas fa-edit"></i> Modifier
+                    </button>
+                    <button class="action-button preview-button" onclick="previewImage('hero-image')">
+                        <i class="fas fa-eye"></i> Aperçu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Chambres -->
+        <div class="section">
+            <h2><i class="fas fa-bed"></i> Page Chambres</h2>
+            <div class="image-container">
+                <div class="image-preview" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="image-info">
+                    <p><strong>La Suite</strong></p>
+                    <p>chambres.html</p>
+                </div>
+                <div class="image-actions">
+                    <button class="action-button edit-button" onclick="editImage('suite-image')">
+                        <i class="fas fa-edit"></i> Modifier
+                    </button>
+                    <button class="action-button preview-button" onclick="previewImage('suite-image')">
+                        <i class="fas fa-eye"></i> Aperçu
+                    </button>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <div class="image-preview" style="background-image: url('https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="image-info">
+                    <p><strong>Chambre Geo</strong></p>
+                    <p>chambres.html</p>
+                </div>
+                <div class="image-actions">
+                    <button class="action-button edit-button" onclick="editImage('geo-image')">
+                        <i class="fas fa-edit"></i> Modifier
+                    </button>
+                    <button class="action-button preview-button" onclick="previewImage('geo-image')">
+                        <i class="fas fa-eye"></i> Aperçu
+                    </button>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <div class="image-preview" style="background-image: url('https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="image-info">
+                    <p><strong>Chambre Créole</strong></p>
+                    <p>chambres.html</p>
+                </div>
+                <div class="image-actions">
+                    <button class="action-button edit-button" onclick="editImage('creole-image')">
+                        <i class="fas fa-edit"></i> Modifier
+                    </button>
+                    <button class="action-button preview-button" onclick="previewImage('creole-image')">
+                        <i class="fas fa-eye"></i> Aperçu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="chambres.html">Chambres</a>
+        <a href="domaine.html">Autour du Domaine</a>
+        <a href="localisation.html">Nous localiser</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+        // Fonction pour modifier une image
+        function editImage(imageId) {
+            // Créer un input de type file
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            
+            // Gérer le changement de fichier
+            fileInput.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        // Mettre à jour l'aperçu
+                        const imagePreview = document.querySelector(`[onclick="editImage('${imageId}')"]`)
+                            .closest('.image-container')
+                            .querySelector('.image-preview');
+                        imagePreview.style.backgroundImage = `url('${event.target.result}')`;
+                        
+                        // Ici, vous pourrez ajouter la logique pour envoyer le fichier au serveur
+                        console.log('Fichier sélectionné:', file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            // Déclencher le sélecteur de fichier
+            fileInput.click();
+        }
+
+        // Fonction pour prévisualiser une image
+        function previewImage(imageId) {
+            const imagePreview = document.querySelector(`[onclick="previewImage('${imageId}')"]`)
+                .closest('.image-container')
+                .querySelector('.image-preview');
+            const imageUrl = imagePreview.style.backgroundImage.slice(4, -1).replace(/"/g, "");
+            
+            // Ouvrir l'image dans un nouvel onglet
+            window.open(imageUrl, '_blank');
+        }
+    </script>
+</body>
+</html> 

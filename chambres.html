@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Chambres - Domaine de Gach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .navbar-container {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 60%;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 1s ease-out;
+            position: relative;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .rooms-container {
+            max-width: 1200px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .room-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .room-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .room-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .room-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .feature i {
+            color: #2E7D32;
+        }
+
+        .room-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #2E7D32;
+            margin-bottom: 20px;
+        }
+
+        .book-button {
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            background-color: #2E7D32;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .book-button:hover {
+            background-color: #1B5E20;
+            transform: translateY(-3px);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .navbar {
+                width: 85%;
+                padding: 1rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .navbar {
+                width: 60%;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger span {
+                width: 30px;
+                height: 3px;
+                margin: 6px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(8px, -8px);
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                font-weight: 400;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                white-space: normal;
+            }
+
+            .nav-links a:hover {
+                background-color: #f5f5f5;
+                transform: translateX(-5px);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .room-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .room-image {
+                height: 250px;
+            }
+
+            .pool-section {
+                margin: 30px 0;
+            }
+
+            .pool-image {
+                height: 350px;
+            }
+
+            .pool-image h2 {
+                font-size: 2rem;
+            }
+
+            .pool-image p {
+                font-size: 1rem;
+            }
+
+            .common-features {
+                padding: 20px;
+            }
+
+            .common-features h2 {
+                font-size: 1.8rem;
+            }
+
+            .feature-item {
+                text-align: center;
+            }
+
+            .feature-item i {
+                font-size: 1.8rem;
+            }
+
+            .feature-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .feature-item p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .room-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .pool-section {
+                margin: 40px 0;
+            }
+
+            .pool-image {
+                height: 400px;
+            }
+
+            .pool-image h2 {
+                font-size: 2.5rem;
+            }
+
+            .common-features {
+                padding: 25px;
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .navbar {
+                width: 85%;
+                padding: 1rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+
+            .room-grid {
+                gap: 25px;
+            }
+
+            .pool-section {
+                margin: 45px 0;
+            }
+        }
+
+        .pool-section {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
+            width: 100%;
+        }
+
+        .pool-image {
+            height: 500px;
+            background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pool-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+            border-radius: 12px;
+        }
+
+        .pool-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .pool-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .pool-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .pool-features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pool-feature {
+            background: rgba(255,255,255,0.9);
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .pool-feature:hover {
+            transform: translateY(-3px);
+        }
+
+        .pool-feature i {
+            color: #2E7D32;
+        }
+
+        @media (max-width: 768px) {
+            .pool-section {
+                margin: 30px 0;
+            }
+
+            .pool-image {
+                height: 350px;
+            }
+
+            .pool-content h2 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .pool-content p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .pool-features {
+                gap: 10px;
+            }
+
+            .pool-feature {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .pool-section {
+                margin: 40px 0;
+            }
+
+            .pool-image {
+                height: 400px;
+            }
+
+            .pool-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .pool-content p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .pool-section {
+                margin: 45px 0;
+            }
+
+            .pool-image {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Domaine de Gach</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Chambres</a>
+                <a href="domaine.html">Autour du Domaine</a>
+                <a href="localisation.html">Nous localiser</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <h1>Nos Chambres</h1>
+    </section>
+
+    <div class="rooms-container" style="margin-top: -120px;">
+        
+        <div class="pool-section">
+            <div class="pool-image">
+                <div class="pool-overlay"></div>
+                <div class="pool-content">
+                    <h2>Notre Piscine à Débordement</h2>
+                    <p>Une piscine spacieuse baignée de soleil, offrant une vue imprenable sur les paysages de l'Aude</p>
+                    <div class="pool-features">
+                        <div class="pool-feature">
+                            <i class="fas fa-sun"></i>
+                            <span>Exposition plein sud</span>
+                        </div>
+                        <div class="pool-feature">
+                            <i class="fas fa-mountain"></i>
+                            <span>Vue panoramique</span>
+                        </div>
+                        <div class="pool-feature">
+                            <i class="fas fa-umbrella-beach"></i>
+                            <span>Espace détente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="room-grid">
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="room-content">
+                    <h2>La Suite</h2>
+                    <p>Notre suite la plus spacieuse avec vue panoramique sur le jardin. Un espace de vie luxueux pour un séjour inoubliable. Profitez de l'accès direct à la piscine et aux espaces communs du domaine.</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> 1 lit king-size</span>
+                        <span class="feature"><i class="fas fa-bath"></i> Salle de bain privée</span>
+                        <span class="feature"><i class="fas fa-wifi"></i> WiFi gratuit</span>
+                        <span class="feature"><i class="fas fa-swimming-pool"></i> Accès piscine</span>
+                    </div>
+                    <div class="room-price">À partir de 180€ / nuit</div>
+                    <a href="reservation.html?room=suite" class="book-button">Réserver</a>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="room-content">
+                    <h2>Chambre Geo</h2>
+                    <p>Une chambre élégante avec une décoration soignée et une ambiance chaleureuse. Profitez de l'accès à la piscine et aux espaces communs du domaine pour un séjour des plus agréables.</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> 1 lit queen-size</span>
+                        <span class="feature"><i class="fas fa-bath"></i> Salle de bain privée</span>
+                        <span class="feature"><i class="fas fa-wifi"></i> WiFi gratuit</span>
+                        <span class="feature"><i class="fas fa-swimming-pool"></i> Accès piscine</span>
+                    </div>
+                    <div class="room-price">À partir de 150€ / nuit</div>
+                    <a href="reservation.html?room=geo" class="book-button">Réserver</a>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="room-content">
+                    <h2>Chambre Créole</h2>
+                    <p>Une chambre aux couleurs chaudes et à l'ambiance exotique. Profitez de l'accès à la piscine et aux espaces communs du domaine pour un séjour des plus agréables.</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> 1 lit queen-size</span>
+                        <span class="feature"><i class="fas fa-bath"></i> Salle de bain privée</span>
+                        <span class="feature"><i class="fas fa-wifi"></i> WiFi gratuit</span>
+                        <span class="feature"><i class="fas fa-swimming-pool"></i> Accès piscine</span>
+                    </div>
+                    <div class="room-price">À partir de 150€ / nuit</div>
+                    <a href="reservation.html?room=creole" class="book-button">Réserver</a>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <div class="room-image" style="background-image: url('https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="room-content">
+                    <h2>Chambre Denis</h2>
+                    <p>Une chambre moderne et confortable, idéale pour les voyageurs en quête de simplicité et d'élégance.</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> 1 lit queen-size</span>
+                        <span class="feature"><i class="fas fa-bath"></i> Salle de bain privée</span>
+                        <span class="feature"><i class="fas fa-wifi"></i> WiFi gratuit</span>
+                    </div>
+                    <div class="room-price">À partir de 100€ / nuit</div>
+                    <a href="reservation.html?room=denis" class="book-button">Réserver</a>
+                </div>
+            </div>
+        </div>
+        <div class="common-features" style="background: white; padding: 30px; border-radius: 12px; margin-top: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 20px; color: #2E7D32;">Équipements Communs</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="feature-item">
+                    <i class="fas fa-swimming-pool" style="font-size: 2rem; color: #2E7D32; margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 10px;">Piscine</h3>
+                    <p style="color: #666;">Profitez de notre magnifique piscine à débordement avec vue panoramique sur les paysages environnants. Un espace de détente idéal pour se rafraîchir et se relaxer.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-spa" style="font-size: 2rem; color: #2E7D32; margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 10px;">Jardin</h3>
+                    <p style="color: #666;">Un vaste jardin paysager avec des espaces de détente, des coins ombragés et des points de vue imprenables sur la nature environnante.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-umbrella-beach" style="font-size: 2rem; color: #2E7D32; margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 10px;">Terrasses</h3>
+                    <p style="color: #666;">Plusieurs terrasses ensoleillées où vous pourrez profiter du calme et de la beauté du domaine, idéales pour le petit-déjeuner ou un moment de détente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html> 

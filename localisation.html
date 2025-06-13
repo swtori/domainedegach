@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domaine de Gach - Nous localiser</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -30px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-container {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 60%;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 1s ease-out;
+            position: relative;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .main-content {
+            position: relative;
+            margin-top: -50px;
+            padding: 2rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        .location-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 1rem;
+        }
+
+        .map-container {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1.2rem;
+        }
+
+        .contact-item i {
+            color: #666;
+            font-size: 1.4rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-item p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: #666;
+            font-size: 1.6rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #333;
+        }
+
+        .directions {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .directions h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .directions h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #2E7D32;
+        }
+
+        .directions p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .directions strong {
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        .directions ul {
+            list-style: none;
+            margin: 0.5rem 0 1.5rem 0;
+            padding-left: 1.2rem;
+        }
+
+        .directions li {
+            position: relative;
+            padding: 0.3rem 0;
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .directions li::before {
+            content: '•';
+            color: #2E7D32;
+            font-weight: bold;
+            position: absolute;
+            left: -1.2rem;
+        }
+
+        .region-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .region-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .navbar {
+                width: 85%;
+                padding: 1rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .navbar {
+                width: 60%;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger span {
+                width: 30px;
+                height: 3px;
+                margin: 6px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(8px, -8px);
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                font-weight: 400;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                white-space: normal;
+            }
+
+            .nav-links a:hover {
+                background-color: #f5f5f5;
+                transform: translateX(-5px);
+            }
+
+            .hero {
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                padding: 0 20px;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+                padding: 0 20px;
+            }
+
+            .main-content {
+                margin-top: -30px;
+                padding: 1.5rem 1rem;
+                border-radius: 15px 15px 0 0;
+            }
+
+            .location-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .contact-info {
+                padding: 1.5rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .contact-item {
+                margin-bottom: 1.5rem;
+                gap: 1rem;
+            }
+
+            .contact-item i {
+                font-size: 1.2rem;
+            }
+
+            .contact-item p {
+                font-size: 1rem;
+            }
+
+            .social-links {
+                margin-top: 2rem;
+                gap: 1.2rem;
+            }
+
+            .social-links a {
+                font-size: 1.4rem;
+            }
+
+            .directions {
+                margin-top: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .directions h3 {
+                font-size: 1.3rem;
+            }
+
+            .directions p, .directions li {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero {
+                height: 45vh;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+
+            .main-content {
+                margin-top: -40px;
+                padding: 2rem;
+            }
+
+            .location-container {
+                gap: 2.5rem;
+            }
+
+            .map-container {
+                height: 400px;
+            }
+
+            .contact-info {
+                padding: 2rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.7rem;
+            }
+
+            .contact-item {
+                margin-bottom: 1.8rem;
+            }
+
+            .directions {
+                padding: 2rem;
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .hero {
+                height: 50vh;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .main-content {
+                max-width: 95%;
+            }
+
+            .location-container {
+                gap: 3rem;
+            }
+
+            .map-container {
+                height: 450px;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .hero {
+                height: 50vh;
+            }
+
+            .hero h1 {
+                font-size: 3.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+
+            .main-content {
+                max-width: 1200px;
+            }
+
+            .location-container {
+                gap: 3rem;
+            }
+
+            .map-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Domaine de Gach</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Chambres</a>
+                <a href="domaine.html">Autour du Domaine</a>
+                <a href="localisation.html">Nous localiser</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <h1>Nous localiser</h1>
+        <h2>Chambres d'hôtes dans une demeure de caractère à 15 kms de Carcassonne</h2>
+    </section>
+
+    <div class="main-content">
+        <div class="location-container">
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3134.7185852729235!2d2.1776975119604978!3d43.2186110710057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12ae35cc397193fd%3A0xc46c972274935547!2sDomaine%20de%20Gach!5e1!3m2!1sfr!2sfr!4v1749765467514!5m2!1sfr!2sfr" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="contact-info">
+                <h2>Contactez-nous</h2>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p><a href="https://www.google.com/maps/search/?api=1&query=Domaine+de+Gach+11290+Montreal+de+l'Aude+France" target="_blank" style="color: #2E7D32; text-decoration: none;">Domaine de Gach<br>11290 MONTREAL DE L'AUDE<br>France</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p><a href="mailto:contact@domainedegach.com" style="color: #2E7D32; text-decoration: none;">contact@domainedegach.com</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+33 (0)4 68 76 24 04<br>+33 (0)6 03 62 74 90</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <p>Micheline & Eric SARRAIL</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="directions">
+            <div class="region-section">
+                <h3>La région de Carcassonne</h3>
+                <p>Avec vue sur les contreforts des Pyrénées au Sud et du Massif Central au Nord, le Domaine de Gach est situé entre Malepère et Lauragais.</p>
+                <p>La Malepère (mauvaise pierre) offre aux marcheurs et aux cavaliers ses coteaux sauvages plantés de vignes ou pâturés et ses bois riche d'une grande variété de chênes (résultat de la rencontre des deux climats atlantique et méditérranéen).</p>
+                <p>Le Lauragais, pays de « coquaignes » (feuilles du pastel) est lui très différent : traversé par le canal du midi et planté de villages aux maisons de briques rouges...</p>
+            </div>
+
+            <div class="region-section">
+                <h3>Itinéraires</h3>
+                <p><strong>Par l'autoroute, en provenance de Montpellier :</strong></p>
+                <ul>
+                    <li>Sortie n° 23 Carcassonne Ouest, direction Toulouse</li>
+                    <li>Suivre Aéroport Carcassonne en Pays Cathare, puis Montréal</li>
+                    <li>10 kms après l'aéroport, prendre à droite "Domaine de Gach" et continuer sur 1,2 km</li>
+                </ul>
+
+                <p><strong>En provenance de Toulouse :</strong></p>
+                <ul>
+                    <li>Sortie n° 22 Bram, suivre Montréal</li>
+                    <li>A Montréal, prendre à gauche direction Carcassonne</li>
+                    <li>Après 3 kms, prendre à gauche et continuer sur 1,2 km</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation - Domaine de Gach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .navbar-container {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 60%;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 1s ease-out;
+            position: relative;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .hero {
+            height: 40vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .reservation-container {
+            max-width: 800px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reservation-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2E7D32;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-button {
+            background-color: #2E7D32;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #1B5E20;
+            transform: translateY(-2px);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .navbar {
+                width: 85%;
+                padding: 1rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .navbar {
+                width: 60%;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 90%;
+                padding: 1rem 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger span {
+                width: 30px;
+                height: 3px;
+                margin: 6px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(8px, -8px);
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                font-weight: 400;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                white-space: normal;
+            }
+
+            .nav-links a:hover {
+                background-color: #f5f5f5;
+                transform: translateX(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">Domaine de Gach</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Chambres</a>
+                <a href="domaine.html">Autour du Domaine</a>
+                <a href="localisation.html">Nous localiser</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <h1>Réserver votre séjour</h1>
+    </section>
+
+    <div class="reservation-container">
+        <div id="selected-room-preview" style="display: none; margin-bottom: 30px; text-align: center;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <img id="room-image" src="" alt="Chambre sélectionnée" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h2 id="room-title" style="font-family: 'Cormorant Garamond', serif; margin-top: 15px; color: #333;"></h2>
+            </div>
+        </div>
+        <form class="reservation-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="check-in">Date d'arrivée</label>
+                    <input type="date" id="check-in" name="check-in" required>
+                </div>
+                <div class="form-group">
+                    <label for="check-out">Date de départ</label>
+                    <input type="date" id="check-out" name="check-out" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="room-type">Type de chambre</label>
+                    <select id="room-type" name="room-type" required>
+                        <option value="">Sélectionnez une chambre</option>
+                        <option value="suite">La Suite</option>
+                        <option value="geo">Chambre Geo</option>
+                        <option value="creole">Chambre Créole</option>
+                        <option value="denis">Chambre Denis</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Nombre de personnes</label>
+                    <select id="guests" name="guests" required>
+                        <option value="1">1 personne</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Pays</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message spécial (optionnel)</label>
+                <textarea id="message" name="message" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Réserver maintenant</button>
+        </form>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Fonction pour récupérer les paramètres de l'URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Configuration des chambres avec leurs images et titres
+        const rooms = {
+            'suite': {
+                image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
+                title: 'La Suite'
+            },
+            'geo': {
+                image: 'https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
+                title: 'Chambre Geo'
+            },
+            'creole': {
+                image: 'https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
+                title: 'Chambre Créole'
+            },
+            'denis': {
+                image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
+                title: 'Chambre Denis'
+            }
+        };
+
+        // Récupérer le paramètre de la chambre
+        const roomType = getUrlParameter('room');
+
+        // Si une chambre est spécifiée, pré-remplir le formulaire et afficher l'image
+        if (roomType && rooms[roomType]) {
+            const roomSelect = document.getElementById('room-type');
+            if (roomSelect) {
+                roomSelect.value = roomType;
+            }
+
+            // Afficher l'image et le titre de la chambre
+            const previewSection = document.getElementById('selected-room-preview');
+            const roomImage = document.getElementById('room-image');
+            const roomTitle = document.getElementById('room-title');
+
+            if (previewSection && roomImage && roomTitle) {
+                roomImage.src = rooms[roomType].image;
+                roomTitle.textContent = rooms[roomType].title;
+                previewSection.style.display = 'block';
+            }
+        }
+
+        // Gérer le changement de chambre dans le formulaire
+        document.getElementById('room-type').addEventListener('change', function(e) {
+            const selectedRoom = e.target.value;
+            const previewSection = document.getElementById('selected-room-preview');
+            const roomImage = document.getElementById('room-image');
+            const roomTitle = document.getElementById('room-title');
+
+            if (selectedRoom && rooms[selectedRoom]) {
+                roomImage.src = rooms[selectedRoom].image;
+                roomTitle.textContent = rooms[selectedRoom].title;
+                previewSection.style.display = 'block';
+            } else {
+                previewSection.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 
